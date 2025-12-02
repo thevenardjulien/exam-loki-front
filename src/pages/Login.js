@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import logger from "../services/logger";
 
+const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL || "https://examlokijulien-gateway-ufni8y.dokploy.app";
+
 const Login = () => {
   const [credentials, setCredentials] = useState({
     username: "",
@@ -15,7 +17,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://examlokijulien-gateway-ufni8y.dokploy.app/api/auth/login",
+        `${GATEWAY_URL}/api/auth/login`,
         credentials
       );
       const { token, role, username } = response.data;
@@ -31,10 +33,18 @@ const Login = () => {
       if (error.response) {
         // Erreur renvoyée par le serveur
         const { message } = error.response.data;
-        alert(message); // Affiche un message à l'utilisateur (vous pouvez remplacer par un toast)
+        alert(message);
+      } else if (error.code === "ERR_NETWORK" || error.message.includes("Network Error")) {
+        // Erreur réseau (certificat SSL, CORS, etc.)
+        logger.error("Erreur réseau ou certificat SSL", error);
+        if (error.message.includes("CERT") || error.code === "ERR_CERT_AUTHORITY_INVALID") {
+          alert("Erreur de certificat SSL. Le serveur n'est pas accessible. Veuillez contacter l'administrateur.");
+        } else {
+          alert("Erreur de connexion au serveur. Vérifiez votre connexion internet et réessayez.");
+        }
       } else {
-        // Erreur réseau ou autre
-        logger.error("Erreur réseau ou serveur", error);
+        // Autre erreur
+        logger.error("Erreur lors de la connexion", error);
         alert("Une erreur est survenue. Veuillez réessayer.");
       }
     }

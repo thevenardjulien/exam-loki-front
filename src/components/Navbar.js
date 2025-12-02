@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Navbar = () => {
     // Supprimer les informations d'authentification
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    Cookies.remove('cart_state');
     navigate('/login');
   };
 
