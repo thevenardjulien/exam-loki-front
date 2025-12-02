@@ -45,6 +45,7 @@ const ShippingAddress = () => {
             Rue
           </label>
           <input 
+            required
             type="text" 
             id="street" 
             name="street" 
@@ -58,6 +59,7 @@ const ShippingAddress = () => {
             Ville
           </label>
           <input 
+            required
             type="text" 
             id="city" 
             name="city" 
@@ -71,6 +73,7 @@ const ShippingAddress = () => {
             Code Postal
           </label>
           <input 
+            required
             type="text" 
             id="postalCode" 
             name="postalCode" 
@@ -84,6 +87,7 @@ const ShippingAddress = () => {
             Pays
           </label>
           <input 
+            required
             type="text" 
             id="country" 
             name="country" 
