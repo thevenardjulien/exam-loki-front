@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import logger from "../services/logger";
 
-const GATEWAY_URL = process.env.REACT_APP_GATEWAY_URL || "https://examlokijulien-gateway-ufni8y.dokploy.app";
+// Utiliser directement le backend (même URL que l'API)
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001/api';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -16,8 +17,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Utiliser directement le backend pour le login
       const response = await axios.post(
-        `${GATEWAY_URL}/api/auth/login`,
+        `${API_BASE_URL}/auth/login`,
         credentials
       );
       const { token, role, username } = response.data;
