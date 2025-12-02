@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://examlokijulien-frontend-dqjv0e.dokploy.app/api/auth/login",
+        "https://examlokijulien-gateway-ufni8y.dokploy.app/api/auth/login",
         credentials
       );
       const { token, role, username } = response.data;
