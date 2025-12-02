@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 
 const ShippingAddress = () => {
@@ -7,6 +7,14 @@ const ShippingAddress = () => {
   const [city, setCity] = useState(shippingAddress.city || '');
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || '');
   const [country, setCountry] = useState(shippingAddress.country || '');
+
+  // Synchroniser les états locaux avec le contexte (pour les valeurs depuis le cookie)
+  useEffect(() => {
+    setStreet(shippingAddress.street || '');
+    setCity(shippingAddress.city || '');
+    setPostalCode(shippingAddress.postalCode || '');
+    setCountry(shippingAddress.country || '');
+  }, [shippingAddress]);
 
   const handleAddressChange = (event) => {
     const { name, value } = event.target;
@@ -42,7 +50,7 @@ const ShippingAddress = () => {
       <div className="space-y-2">
         <div>
           <label htmlFor="street" className="block text-sm font-medium text-gray-700">
-            Rue
+            Rue <span className="text-red-500">*</span>
           </label>
           <input 
             required
@@ -56,7 +64,7 @@ const ShippingAddress = () => {
         </div>
         <div>
           <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-            Ville
+            Ville <span className="text-red-500">*</span>
           </label>
           <input 
             required
@@ -70,7 +78,7 @@ const ShippingAddress = () => {
         </div>
         <div>
           <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700">
-            Code Postal
+            Code Postal <span className="text-red-500">*</span>
           </label>
           <input 
             required
@@ -84,7 +92,7 @@ const ShippingAddress = () => {
         </div>
         <div>
           <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-            Pays
+            Pays <span className="text-red-500">*</span>
           </label>
           <input 
             required
