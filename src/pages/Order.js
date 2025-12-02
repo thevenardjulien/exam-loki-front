@@ -9,6 +9,17 @@ const Order = () => {
   //recuperer le context panier
   const { cart, shippingAddress, paymentMethod, shippingMethod, dispatch } =
     useCart(); // Récupérer le contenu du panier à partir du contexte
+  
+  // Fonction pour formater l'affichage de la méthode de livraison
+  const formatShippingMethod = (method) => {
+    if (!method) return "Non spécifiée";
+    const methodMap = {
+      colissimo: "Colissimo",
+      chronopost: "Chronopost",
+    };
+    return methodMap[method.toLowerCase()] || method;
+  };
+
   // Naviguer vers la page de commande
   const handleShippingPage = () => {
     navigate("/shippig_payment");
@@ -159,7 +170,7 @@ const Order = () => {
                   Méthode de livraison
                 </h3>
                 <div className="bg-gray-50 p-4 rounded">
-                  {shippingMethod || "Non spécifiée"}
+                  {formatShippingMethod(shippingMethod)}
                 </div>
               </div>
 
