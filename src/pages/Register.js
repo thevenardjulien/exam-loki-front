@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logger from '../services/logger';
 
+// Utiliser directement le backend (même URL que l'API)
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001/api';
+
 const Register = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -23,21 +26,28 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5001/api/auth/register', formData);
+      // Utiliser directement le backend pour l'inscription
+      await axios.post(`${API_BASE_URL}/auth/register`, formData);
       alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');
       navigate('/login');
     } catch (err) {
-      //console.error('Erreur lors de l\'inscription', err);
       if (err.response) {
         // Erreur renvoyée par le serveur
         const { message } = err.response.data;
-        alert(message); // Affiche un message à l'utilisateur (vous pouvez remplacer par un toast)
+        alert(message);
+      } else if (err.code === "ERR_NETWORK" || err.message.includes("Network Error")) {
+        // Erreur réseau (certificat SSL, CORS, etc.)
+        logger.error("Erreur réseau ou certificat SSL", err);
+        if (err.message.includes("CERT") || err.code === "ERR_CERT_AUTHORITY_INVALID") {
+          alert("Erreur de certificat SSL. Le serveur n'est pas accessible. Veuillez contacter l'administrateur.");
+        } else {
+          alert("Erreur de connexion au serveur. Vérifiez votre connexion internet et réessayez.");
+        }
       } else {
-        // Erreur réseau ou autre
+        // Autre erreur
         logger.error("Erreur réseau ou serveur", err);
         alert("Une erreur est survenue. Veuillez réessayer.");
       }
-      //setError('Une erreur est survenue lors de la création du compte.');
     }
   };
 
