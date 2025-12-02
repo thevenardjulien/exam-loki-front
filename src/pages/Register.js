@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import logger from '../services/logger';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ const Register = () => {
         alert(message); // Affiche un message à l'utilisateur (vous pouvez remplacer par un toast)
       } else {
         // Erreur réseau ou autre
-        console.error("Erreur réseau ou serveur", err);
+        logger.error("Erreur réseau ou serveur", err);
         alert("Une erreur est survenue. Veuillez réessayer.");
       }
       //setError('Une erreur est survenue lors de la création du compte.');

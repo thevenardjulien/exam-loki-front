@@ -7,6 +7,7 @@ import {
   getProducts,
   updateProductStock,
 } from "../services/adminApi";
+import logger from "../services/logger";
 
 const Admin = () => {
   const [orders, setOrders] = useState([]);
@@ -74,7 +75,7 @@ const Admin = () => {
       // Réinitialisation du champ
       setNewStock({ ...newStock, [productId]: "" });
     } catch (error) {
-      console.error("Erreur lors de la mise à jour du stock :", error);
+      logger.error("Erreur lors de la mise à jour du stock :", error);
       alert("Échec de la mise à jour du stock.");
     } finally {
       setUpdatingStock(null); // Désactive le loader

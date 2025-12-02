@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { createOrder } from "../services/api";
+import logger from "../services/logger";
 
 const Order = () => {
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ const Order = () => {
       dispatch({ type: "CLEAR_CART" });
       alert("Commande confirmée avec succès !");
     } catch (error) {
-      console.error("Erreur lors de la commande", error);
+      logger.error("Erreur lors de la commande", error);
       alert("Une erreur technique est survenue. Veuillez réessayer.");
     }
   };

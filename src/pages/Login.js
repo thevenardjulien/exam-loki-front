@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import logger from "../services/logger";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -33,7 +34,7 @@ const Login = () => {
         alert(message); // Affiche un message à l'utilisateur (vous pouvez remplacer par un toast)
       } else {
         // Erreur réseau ou autre
-        console.error("Erreur réseau ou serveur", error);
+        logger.error("Erreur réseau ou serveur", error);
         alert("Une erreur est survenue. Veuillez réessayer.");
       }
     }

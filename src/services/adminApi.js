@@ -1,5 +1,6 @@
 // src/services/adminApi.js
 import axios from "axios";
+import logger from "./logger";
 
 const API_BASE_URL = "http://localhost:5001/api";
 
@@ -12,7 +13,7 @@ export const getOrders = () => {
       },
     });
   } catch (error) {
-    console.error("Erreur lors de la recupération des commandes :", error);
+    logger.error("Erreur lors de la recupération des commandes :", error);
     throw error; // Lancer l'erreur pour que le composant puisse la gérer
   }
 };
@@ -26,7 +27,7 @@ export const getProducts = () => {
       },
     });
   } catch (error) {
-    console.error("Erreur lors de la recupération des produits :", error);
+    logger.error("Erreur lors de la recupération des produits :", error);
     throw error; // Lancer l'erreur pour que le composant puisse la gérer
   }
 };
@@ -44,7 +45,7 @@ export const updateOrderStatus = (orderId, status) => {
       }
     );
   } catch (error) {
-    console.error(
+    logger.error(
       "Erreur lors de la mise à jour du statut de la commande :",
       error
     );
@@ -65,7 +66,7 @@ export const validateOrder = (orderId) => {
       }
     );
   } catch (error) {
-    console.error("Erreur lors de la validation de la commande :", error);
+    logger.error("Erreur lors de la validation de la commande :", error);
     throw error; // Lancer l'erreur pour que le composant puisse la gérer
   }
 };
@@ -84,7 +85,7 @@ export const updateProductStock = (productId, stock) => {
       }
     );
   } catch (error) {
-    console.error("Erreur lors de la mise à jour du stock :", error);
+    logger.error("Erreur lors de la mise à jour du stock :", error);
     throw error; // Lancer l'erreur pour que le composant puisse la gérer
   }
 };
