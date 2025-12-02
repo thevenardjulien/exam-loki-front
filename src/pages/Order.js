@@ -75,16 +75,27 @@ const Order = () => {
 
       const response = await createOrder(orderDetails);
 
-      if (response.error) {
-        alert(`Erreur : ${response.message || "Échec de la commande"}`);
+      if (response.data?.error) {
+        alert(`Erreur : ${response.data.message || "Échec de la commande"}`);
         return;
       }
 
       dispatch({ type: "CLEAR_CART" });
       alert("Commande confirmée avec succès !");
+      navigate("/"); // Rediriger vers la page d'accueil après succès
     } catch (error) {
       logger.error("Erreur lors de la commande", error);
-      alert("Une erreur technique est survenue. Veuillez réessayer.");
+      
+      // Gérer les erreurs d'authentification
+      if (error.isAuthError || error.status === 401 || error.status === 403) {
+        alert(error.message || "Votre session a expiré. Veuillez vous reconnecter.");
+        navigate("/login");
+        return;
+      }
+      
+      // Gérer les autres erreurs
+      const errorMessage = error.response?.data?.message || error.message || "Une erreur technique est survenue. Veuillez réessayer.";
+      alert(`Erreur : ${errorMessage}`);
     }
   };
 
