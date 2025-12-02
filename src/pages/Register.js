@@ -3,9 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logger from '../services/logger';
-
-// Utiliser directement le backend (même URL que l'API)
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001/api';
+import { API_BASE_URL } from '../config/apiConfig';
 
 const Register = () => {
   const [formData, setFormData] = useState({
