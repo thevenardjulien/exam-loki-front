@@ -13,9 +13,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001/api';
       const response = await axios.post(
-        `${API_BASE_URL}/auth/login`,
+        "https://examlokijulien-gateway-ufni8y.dokploy.app/api/auth/login",
         credentials
       );
       const { token, role, username } = response.data;
