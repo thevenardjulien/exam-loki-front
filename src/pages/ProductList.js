@@ -12,7 +12,7 @@ const ProductList = () => {
   }, []);
 
   const addToCart = (product) => {
-    //console.log('Produit ajouté au panier :', product._id, " et name est ", product.name);
+    // console.log('Produit ajouté au panier :', product._id, " et name est ", product.name);
     dispatch({
       type: 'ADD_TO_CART',
       payload: { ...product, id:product._id, quantity: 1 }, // Ajoute +1 à la quantité
