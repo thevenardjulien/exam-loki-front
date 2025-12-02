@@ -8,11 +8,13 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Serveur de production
-FROM nginx:alpine
-COPY --from=builder /app/build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Serveur de production avec serve
+FROM node:20-alpine
+RUN npm install -g serve
 
-EXPOSE 80
+WORKDIR /app
+COPY --from=builder /app/build ./build
 
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 3000
+
+CMD ["serve", "-s", "build", "-l", "3000"]
